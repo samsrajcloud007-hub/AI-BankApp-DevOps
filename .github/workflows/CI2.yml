@@ -15,7 +15,7 @@ jobs:
               with:
                 fetch_depth: 0
             - name: scan using git leaks
-              uses: gitleaks/gitleaks-actions@v3
+              uses: gitleaks/gitleaks-action@v3
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -39,13 +39,14 @@ jobs:
     
     sast:
         runs-on: ubuntu-latest
+        needs: [ gitleaks, lint ]
         steps:
             - name: Code checkout
               uses: actions/checkout@v6
 
             - name: scan using opengrep 
               id: scan
-              uses: platform-sec/opengrep-action@LATEST_SHA256_HASH
+              uses: platform-sec/opengrep-action@v1
               with:
                 target: .
                 output-format: json/sarif
