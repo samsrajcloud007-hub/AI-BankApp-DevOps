@@ -42,13 +42,12 @@ jobs:
         needs: [ gitleaks, lint ]
         steps:
             - name: Code checkout
-              uses: actions/checkout@v6
+              uses: actions/checkout@v4
 
             - name: scan using opengrep 
               id: scan
               uses: platform-sec/opengrep-action@v1
               with:
-                opengrep-version: 'latest'
                 target: .
                 output-format: json/sarif
                 strict: true
