@@ -46,7 +46,7 @@ jobs:
 
             - name: scan using opengrep 
               id: scan
-              uses: opengrep/opengrep-action@v1
+              uses: platform-sec/opengrep-action@v1
               with:
                 opengrep-version: 'latest'
                 target: .
