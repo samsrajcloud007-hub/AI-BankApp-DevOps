@@ -4,7 +4,9 @@ on:
         branches:
             main
 permissions:
-    security-events: read
+       contents: read
+       actions: read
+       security-events: write
 jobs:
     code-quality:
         runs-on: ubuntu-latest
