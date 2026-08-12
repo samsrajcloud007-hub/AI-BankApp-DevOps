@@ -26,8 +26,14 @@ jobs:
                 github_token: ${{ secrets.GITHUB_TOKEN }}
                 # Options: google (default) or sun
                 level: warning
-
             
+            - name: Run Semgrep
+              uses: semgrep/semgrep-action@v1
+              with:
+               config: p/java
+            
+            - name: build and scan with maven
+              run: maven clean verify -Dskiptests
 
             - name: Initialize CodeQL
               uses: github/codeql-action/init@v3
