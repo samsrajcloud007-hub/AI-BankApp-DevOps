@@ -18,7 +18,7 @@ jobs:
             - name: Lint Code Base
               uses: super-linter/super-linter@v5
               env:
-                VALIDATE_ALL_CODEBASE: false # Lint only changed files
+                VALIDATE_ALL_CODEBASE: true # Lint only changed files
                 VALIDATE_JAVA: true
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
