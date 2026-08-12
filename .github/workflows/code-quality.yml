@@ -33,7 +33,7 @@ jobs:
                config: p/java
             
             - name: build and scan with maven
-              run: mvn clean verify -Dskiptests
+              run: ./mvnw clean verify -Dskiptests
 
             - name: Initialize CodeQL
               uses: github/codeql-action/init@v3
