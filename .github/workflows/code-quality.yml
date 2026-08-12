@@ -1,0 +1,37 @@
+name: Code Quality check
+on:
+    workflow_dispatch:
+
+jobs:
+    code-quality:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Code checkout
+              uses: actions/checkout@v7
+              
+            - name: Setup Java
+              uses: actions/setup-java@v5
+              with:
+                java-version: '21'
+                distribution: temurin
+
+            - name: Lint Code Base
+              uses: super-linter/super-linter@v5
+              env:
+                VALIDATE_ALL_CODEBASE: false # Lint only changed files
+                VALIDATE_JAVA: true
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            
+
+            - name: Initialize CodeQL
+              uses: github/codeql-action/init@v3
+              with:
+                languages: 'java'
+
+            # CodeQL requires a build step for compiled languages like Java
+            - name: Build Java application
+              run: |
+                ./mvnw clean package -DskipTests
+
+            - name: Perform CodeQL Analysis
+              uses: github/codeql-action/analyze@v3
