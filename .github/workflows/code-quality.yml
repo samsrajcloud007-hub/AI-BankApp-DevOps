@@ -1,7 +1,10 @@
 name: Code Quality check
 on:
-    workflow_dispatch:
-
+    push:
+        branches:
+            main
+permissions:
+    security-events: read
 jobs:
     code-quality:
         runs-on: ubuntu-latest
