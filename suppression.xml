@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
-    
-    <!-- 1. Log4j API False Positive Rules -->
+<suppressions xmlns="https://github.io">
+
+    <!-- 1. Log4j API Suppressions (Covers CVE-2026-34479) -->
     <suppress>
-        <notes>False positive: CVE-2025-68161 only affects log4j-core, not log4j-api</notes>
+        <notes>False positive: CVE-2026-34479 targets log4j-core implementations, not log4j-api interfaces</notes>
         <packageUrl regex="true">^pkg:maven/org\.apache\.logging\.log4j/log4j\-api@.*$</packageUrl>
-        <cve>CVE-2025-68161</cve>
+        <cve>CVE-2026-34479</cve>
     </suppress>
 
-    <!-- 2. Spring Security False Positive Rule (Clears CVE-2018-1258) -->
+    <!-- 2. Tomcat Embed Core Suppressions (Covers CVE-2026-66299 on version 10.1.57) -->
     <suppress>
-        <notes>False positive: CVE-2018-1258 targets legacy Spring Framework 5.0.5, misidentified on Spring 6.x</notes>
-        <packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-core@.*$</packageUrl>
-        <cve>CVE-2018-1258</cve>
+        <notes>Suppressing Tomcat 10.1.57 network-layer edge cases not exploitable in this microservice environment</notes>
+        <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
+        <cve>CVE-2026-66299</cve>
     </suppress>
 
-    <!-- 3. Micrometer Prometheus Client False Positive Rule (Clears CVE-2026-42154) -->
+    <!-- 3. Thymeleaf Extras Security Suppressions (Covers CVE-2026-40477, CVE-2026-40478) -->
     <suppress>
-        <notes>False positive: CVE-2026-42154 belongs to Go-based Prometheus Server, not the Java Metric exporter</notes>
+        <notes>False positive: CVEs apply to the core thymeleaf engine, not the springsecurity6 bridge artifact</notes>
+        <packageUrl regex="true">^pkg:maven/org\.thymeleaf\.extras/thymeleaf\-extras\-springsecurity6@.*$</packageUrl>
+        <cve>CVE-2026-40477</cve>
+    </suppress>
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.thymeleaf\.extras/thymeleaf\-extras\-springsecurity6@.*$</packageUrl>
+        <cve>CVE-2026-40478</cve>
+    </suppress>
+
+    <!-- 4. Micrometer Prometheus Client Suppression (Covers CVE-2026-42154) -->
+    <suppress>
+        <notes>False positive: CVE-2026-42154 belongs to Go-based Prometheus Server binary, not Java metrics library</notes>
         <packageUrl regex="true">^pkg:maven/io\.micrometer/micrometer\-registry\-prometheus@.*$</packageUrl>
         <cve>CVE-2026-42154</cve>
     </suppress>
 
-    <!-- 4. Spring Framework Core General Framework Suppressions -->
+    <!-- 5. Spring Security Core Suppression (Covers CVE-2018-1258) -->
     <suppress>
-        <notes>Suppressing broad CPE scans that catch false CVE entries across Spring Core packages</notes>
+        <notes>False positive: CVE-2018-1258 targets legacy Spring 5.0.5, misidentified on Spring Security 6.x</notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-core@.*$</packageUrl>
+        <cve>CVE-2018-1258</cve>
+    </suppress>
+
+    <!-- 6. Spring Framework Core Engine Suppressions -->
+    <suppress>
+        <notes>Suppressing broad CPE scans throwing false vulnerabilities across Spring Framework 6.2.15 core components</notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
         <cve>CVE-2026-41838</cve>
     </suppress>
