@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suppressions xmlns="https://github.io">
-
+<suppressions xmlns="http://github.io">
+    
     <!-- 1. Log4j API Suppressions (Covers CVE-2026-34479) -->
     <suppress>
         <notes>False positive: CVE-2026-34479 targets log4j-core implementations, not log4j-api interfaces</notes>
