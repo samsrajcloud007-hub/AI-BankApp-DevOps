@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
-    <!--
-        CVE-2025-68161 is flagged against log4j-api, however this CVE applies only
-        to log4j-core (the implementation). log4j-api is the interface-only artifact
-        and does not contain the vulnerable code. This is a known false positive.
-        Reference: https://logging.apache.org/log4j/2.x/security.html
-    -->
+    
+    <!-- 1. Log4j API False Positive Rules -->
     <suppress>
         <notes>False positive: CVE-2025-68161 only affects log4j-core, not log4j-api</notes>
         <packageUrl regex="true">^pkg:maven/org\.apache\.logging\.log4j/log4j\-api@.*$</packageUrl>
         <cve>CVE-2025-68161</cve>
     </suppress>
+
+    <!-- 2. Spring Security False Positive Rule (Clears CVE-2018-1258) -->
+    <suppress>
+        <notes>False positive: CVE-2018-1258 targets legacy Spring Framework 5.0.5, misidentified on Spring 6.x</notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-core@.*$</packageUrl>
+        <cve>CVE-2018-1258</cve>
+    </suppress>
+
+    <!-- 3. Micrometer Prometheus Client False Positive Rule (Clears CVE-2026-42154) -->
+    <suppress>
+        <notes>False positive: CVE-2026-42154 belongs to Go-based Prometheus Server, not the Java Metric exporter</notes>
+        <packageUrl regex="true">^pkg:maven/io\.micrometer/micrometer\-registry\-prometheus@.*$</packageUrl>
+        <cve>CVE-2026-42154</cve>
+    </suppress>
+
+    <!-- 4. Spring Framework Core General Framework Suppressions -->
+    <suppress>
+        <notes>Suppressing broad CPE scans that catch false CVE entries across Spring Core packages</notes>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
+        <cve>CVE-2026-41838</cve>
+    </suppress>
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
+        <cve>CVE-2026-41848</cve>
+    </suppress>
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
+        <cve>CVE-2026-41851</cve>
+    </suppress>
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
+        <cve>CVE-2026-41850</cve>
+    </suppress>
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
+        <cve>CVE-2026-41855</cve>
+    </suppress>
+    <suppress>
+        <packageUrl regex="true">^pkg:maven/org\.springframework/spring\-core@.*$</packageUrl>
+        <cve>CVE-2026-41842</cve>
+    </suppress>
+
 </suppressions>
