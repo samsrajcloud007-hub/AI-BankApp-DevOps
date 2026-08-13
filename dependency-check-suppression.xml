@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suppressions xmlns="http://github.io">
-    
-    <!-- 1. Log4j API Suppressions (Covers CVE-2026-34479) -->
+<suppressions xmlns="https://github.io">
+
+    <!-- 1. Log4j API Suppressions -->
     <suppress>
         <notes>False positive: CVE-2026-34479 targets log4j-core implementations, not log4j-api interfaces</notes>
         <packageUrl regex="true">^pkg:maven/org\.apache\.logging\.log4j/log4j\-api@.*$</packageUrl>
         <cve>CVE-2026-34479</cve>
     </suppress>
 
-    <!-- 2. Tomcat Embed Core Suppressions (Covers CVE-2026-66299 on version 10.1.57) -->
+    <!-- 2. Tomcat Embed Core Suppressions -->
     <suppress>
         <notes>Suppressing Tomcat 10.1.57 network-layer edge cases not exploitable in this microservice environment</notes>
         <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
         <cve>CVE-2026-66299</cve>
     </suppress>
 
-    <!-- 3. Thymeleaf Extras Security Suppressions (Covers CVE-2026-40477, CVE-2026-40478) -->
+    <!-- 3. Thymeleaf Extras Security Suppressions -->
     <suppress>
         <notes>False positive: CVEs apply to the core thymeleaf engine, not the springsecurity6 bridge artifact</notes>
         <packageUrl regex="true">^pkg:maven/org\.thymeleaf\.extras/thymeleaf\-extras\-springsecurity6@.*$</packageUrl>
@@ -26,14 +26,14 @@
         <cve>CVE-2026-40478</cve>
     </suppress>
 
-    <!-- 4. Micrometer Prometheus Client Suppression (Covers CVE-2026-42154) -->
+    <!-- 4. Micrometer Prometheus Client Suppression -->
     <suppress>
         <notes>False positive: CVE-2026-42154 belongs to Go-based Prometheus Server binary, not Java metrics library</notes>
         <packageUrl regex="true">^pkg:maven/io\.micrometer/micrometer\-registry\-prometheus@.*$</packageUrl>
         <cve>CVE-2026-42154</cve>
     </suppress>
 
-    <!-- 5. Spring Security Core Suppression (Covers CVE-2018-1258) -->
+    <!-- 5. Spring Security Core Suppression -->
     <suppress>
         <notes>False positive: CVE-2018-1258 targets legacy Spring 5.0.5, misidentified on Spring Security 6.x</notes>
         <packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-core@.*$</packageUrl>
