@@ -28,6 +28,7 @@ jobs:
                 out: 'reports' # this is the default, no need to specify unless you wish to override it
                 args: >
                   --failOnCVSS 7
+                  --disableCentral
               env:
                 JAVA_HOME: /opt/jdk
               
