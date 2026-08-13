@@ -36,6 +36,7 @@ jobs:
               uses: github/codeql-action/init@v3
               with:
                 languages: 'java'
+                queries: security-extended, security-and-quality
 
             # CodeQL requires a build step for compiled languages like Java
             - name: Build Java application
