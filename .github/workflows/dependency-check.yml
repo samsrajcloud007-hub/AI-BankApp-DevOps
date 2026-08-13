@@ -19,7 +19,10 @@ jobs:
               run:  mvn clean package -DskipTests
 
             - name: Run Dependency Scan via Maven
-              run: mvn org.owasp:dependency-check-maven:check -DcentralAnalyzerEnabled=false
+              run: mvn org.owasp:dependency-check-maven:check -DcentralAnalyzerEnabled=false -DfailBuildOnCVSS=7
+              env:
+                NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+
 
               
             - name: Upload Test results
