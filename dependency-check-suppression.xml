@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suppressions xmlns="https://github.io">
+<suppressions xmlns="http://github.io">
 
     <!-- 1. Log4j API Suppressions -->
     <suppress>
