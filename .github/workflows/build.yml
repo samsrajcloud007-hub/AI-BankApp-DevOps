@@ -1,0 +1,85 @@
+name: build
+on:
+    workflow_call:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Code Checkout
+              uses: actions/checkout@v6
+
+            - name: setup Java
+              uses: actions/setup-java@v5
+              with:
+                java-version: 21
+                distribution: temurin
+            
+            - name: Maven build
+              run: |
+                mvn clean package -DskipTests
+            
+            - name: Upload Build Artifact
+              uses: actions/cache@v4
+              with:
+                name: app-jar
+                path: target/*.jar
+
+    image-scan:
+        runs-on: ubuntu-latest
+        needs: [ build ]
+        steps:
+            - name: Code Checkout
+              uses: actions/checkout@v6
+ 
+
+            - name: docker build
+              run: docker build -t bankapp:scan-${{ github.sha }}
+
+            - name: Cache Trivy Db 
+              uses: actions/cache@v4
+              with:
+                path: ~/.cache/trivy
+                key: trivy-db-${{ runner.os }}-${{ github.run_id }}
+                restore-keys: |
+                  trivy-db-${{ runner.os }}-
+            - name: Trivy Scan 
+              uses: aquasecurity/trivy-action@master
+              with:
+                image_ref: bankapp:scan-${{ github.sha }}
+                format: 'table'
+                exit-code: '1'
+                ignore-unfixed: true
+                severity: 'CRITICAL,HIGH'
+                vuln-type: 'os,library'
+                output: trivy-report.txt
+                trivy-config: trivy.yaml
+
+            - name: upload trivy report
+              uses: actions/cache@v4
+              if: always()
+              with:
+                name: trivy-scan-report
+                path: trivy-report.txt
+
+    image-push:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Code Checkout
+              uses: actions/checkout@v6
+
+            - name: docker login
+              uses: docker/login-action@v4
+              with:
+                username: ${{ vars.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+            
+            - name: docker build and push 
+              uses: docker/build-push-action@v7
+              with:
+                push: true
+                tags: |
+                  ${{ vars.DOCKERHUB_USERNAME }}/bankapp:${{ github.sha }}
+                  ${{ vars.DOCKERHUB_USERNAME }}/bankapp:latest
+
+                  
