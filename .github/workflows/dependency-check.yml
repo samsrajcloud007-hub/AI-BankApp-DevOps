@@ -29,7 +29,7 @@ jobs:
                 args: >
                   --failOnCVSS 7
                   --disableCentral
-                  --suppression ${{github.workspace}}/suppression.xml
+                  --suppression suppression.xml
               env:
                 JAVA_HOME: /opt/jdk
               
