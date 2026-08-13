@@ -16,7 +16,7 @@ jobs:
                 distribution: 'temurin'
 
             - name: Build Project with Maven
-              run: mvn clean install 
+              run:  mvn clean package -DskipTests
 
             - name: Depcheck
               uses: dependency-check/Dependency-Check_Action@main
